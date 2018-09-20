@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="<%=basePath%>">	
     
     <title>注册页面</title>
     
@@ -33,11 +33,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
   	function checkPassword1(){
   		var password = document.getElementById("password1").value;
-  		if(password.length<6){
+  		var reg = /^(?![A-ZA-Z]+$)(?!\d+$)\S{7,16}$/;
+  		if(!(reg.test(password))){
   			document.getElementById("passwordId1").style.color="red";
-  			document.getElementById("passwordId1").innerHTML="密码长度需要大于6";
+  			document.getElementById("passwordId1").innerHTML="密码格式不正确";
+  			return false;
   		}else{
   			document.getElementById("passwordId1").innerHTML="";
+			return true;  		
   		}
   	}
   	
@@ -47,18 +50,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		if(password1!=password2){
   			document.getElementById("passwordId2").style.color="red";
   			document.getElementById("passwordId2").innerHTML="两次密码输入不一致";
+  			return false;
   		}else{
   			document.getElementById("passwordId2").innerHTML="";
+  			return true;
   		}
   	}
   	
   	function checkIdNumber(){
   		var idNumber = document.getElementById("idNumber").value;
-  		if(idNumber.length==16||idNumber.length==18){
+  		reg = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/; 
+  		if(reg.test(idNumber)){
   			document.getElementById("numberId1").innerHTML="";
+  			return true;
   		}else{
   			document.getElementById("numberId1").style.color="red";
   			document.getElementById("numberId1").innerHTML="身份证号码不正确";
+			return false;  		
   		}
   	}
   	
@@ -67,17 +75,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		var reg = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
   		if(reg.test(email)){
   			document.getElementById("emailId").innerHTML="";
+  			return true;
   		}else{
   			document.getElementById("emailId").style.color="red";
   			document.getElementById("emailId").innerHTML="邮箱格式不正确";
+  			return false;
   		}
+  	}
+  	
+  	function checkForm(){
+  		if(checkName()&&checkPassword1()&&checkPassword2()&&checkIdNumber()&&scheckEmail()){
+  			return true;
+  		}else{
+  			return false;
+  		}
+  		
   	}
   </script>
 
   </head>
  
   <body>
-	<form action="" method="post" >
+	<form action="index.jsp" method="post" onsubmit="return checkForm();" >
 		<h2 align="center">用户注册</h2>
 	   <table align="center">
 	   	<tr>
@@ -98,6 +117,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		<td><input type="password" id="password2" onblur="checkPassword2()" /><span id="passwordId2"></span></td>
 	   	</tr>
 	   	<tr>
+	   		<td>
+	   			男<input type="radio" id="sex" name="sex" value="男"/>
+	   			女<input type="radio" id="sex" name="sex" value="女"/>
+	   		</td>
+	   	</tr>
+	   	<tr>
 	   		<td>身份证号:</td>
 	   		<td><input type="text"  id="idNumber" onblur="checkIdNumber()" /><span id="numberId1"></span></td>
 	   	</tr>
@@ -106,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   		<td><input type="text" id="email" onblur="checkEmail()" /><span id="emailId"></span></td>
 	   	</tr>
 	   	<tr>
-	   		<td colspan=2 align="center"><input type="submit" value="提交" onclick="return judge()" /></td>
+	   		<td colspan=2 align="center"><input type="submit" value="提交"  /></td>
 	   	</tr>
 	   </table>
 	</form>
