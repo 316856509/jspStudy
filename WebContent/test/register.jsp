@@ -13,10 +13,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	 <script type="text/javascript">
+	 
+  	// 验证用户名
   	function checkName(){
   	var name = document.getElementById("username").value;
   	var reg =/^([a-zA-Z0-9]{6,})$/i;
-  	
   	if (reg.test(name)){
   		document.getElementById("userId").innerHTML="";
   		return true;
@@ -31,6 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	  }
   	}
   	
+  	// 验证密码格式
   	function checkPassword1(){
   		var password = document.getElementById("password1").value;
   		var reg = /^(?![A-ZA-Z]+$)(?!\d+$)\S{7,16}$/;
@@ -44,6 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		}
   	}
   	
+  	// 验证密码输入是否一致
   	function checkPassword2(){
   		var password1 = document.getElementById("password1").value;
   		var password2 = document.getElementById("password2").value;
@@ -57,6 +60,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		}
   	}
   	
+  	
+  	// 验证身份证号格式
   	function checkIdNumber(){
   		var idNumber = document.getElementById("idNumber").value;
   		reg = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/; 
@@ -70,6 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		}
   	}
   	
+  	// 验证邮箱格式
   	function checkEmail(){
   		var email = document.getElementById("email").value;
   		var reg = /^[a-zA-Z0-9-_]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -83,8 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		}
   	}
   	
+  	// 表单验证
   	function checkForm(){
-  		if(checkName()&&checkPassword1()&&checkPassword2()&&checkIdNumber()&&scheckEmail()){
+  		if(checkName()&&checkPassword1()&&checkPassword2()&&checkIdNumber()&&checkEmail()){
   			return true;
   		}else{
   			return false;
@@ -96,6 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
  
   <body>
+   	<!-- 表单  -->
 	<form action="index.jsp" method="post" onsubmit="return checkForm();" >
 		<h2 align="center">用户注册</h2>
 	   <table align="center">
